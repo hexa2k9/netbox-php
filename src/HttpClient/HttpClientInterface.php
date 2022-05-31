@@ -1,37 +1,41 @@
 <?php
 
-namespace wickedsoft\NetBox\HttpClient;
+namespace port389\NetBox\HttpClient;
 
 interface HttpClientInterface
 {
     /**
      * @return array
      */
-    public function getOptions();
+    public function getOptions(): array;
 
     /**
-     * @param array $body
-     * @return mixed
+     * @param string $path
+     * @param array $query
+     * @return array
      */
-    public function get($path="", $query=[]);
+    public function get(string $path = "", array $query = []): array;
 
     /**
+     * @param string $path
      * @param array $body
-     * @return mixed
+     * @return array
      */
-    public function post($path="", $body=[]);
+    public function post(string $path = "", array $body = []): array;
 
     /**
+     * @param string $path
      * @param array $body
-     * @return mixed
+     * @return array
      */
-    public function put($path="", $body=[]);
+    public function put(string $path = "", array $body = []): array;
 
     /**
+     * @param string $path
      * @param array $body
-     * @return mixed
+     * @return bool
      */
-    public function delete($path="", $body=[]);
+    public function delete(string $path = "", array $body = []): ?bool;
 
     /**
      * @param array $options

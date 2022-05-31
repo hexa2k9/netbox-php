@@ -1,57 +1,60 @@
 <?php
 
-namespace wickedsoft\NetBox;
+namespace port389\NetBox;
 
-use wickedsoft\NetBox\HttpClient\HttpClient;
+use BadMethodCallException;
+use InvalidArgumentException;
+use port389\NetBox\HttpClient\HttpClient;
+use RuntimeException;
 
 class Client
 {
     /** @var array */
     protected $classes = [
-        //Circuits
+        // Circuits
         'circuits' => 'Circuits\Circuits',
         'providers' => 'Circuits\Providers',
         'circuitTerminations' => 'Circuits\CircuitTerminations',
         'circuitTypes' => 'Circuits\CircuitTypes',
 
-        //dcim
-        'cables' => 'DCMI\Cables',
-        'connectedDevices' => 'DCMI\ConnectedDevices',
-        'consoleConnections' => 'DCMI\ConsoleConnections',
-        'consolePorts' => 'DCMI\ConsolePorts',
-        'consolePortTemplates' => 'DCMI\ConsolePortTemplates',
-        'consoleServerPorts' => 'DCMI\ConsoleServerPorts',
-        'consoleServerPortTemplates' => 'DCMI\ConsoleServerPortTemplates',
-        'deviceBays' => 'DCMI\DeviceBays',
-        'deviceBayTemplates' => 'DCMI\DeviceBayTemplates',
-        'deviceRoles' => 'DCMI\DeviceRoles',
-        'devices' => 'DCMI\Devices',
-        'deviceTypes' => 'DCMI\DeviceTypes',
-        'frontPorts' => 'DCMI\FrontPorts',
-        'frontPortTemplates' => 'DCMI\FrontPortTemplates',
-        'interfaceConnections' => 'DCMI\InterfaceConnections',
-        'interfaces' => 'DCMI\Interfaces',
-        'interfaceTemplates' => 'DCMI\InterfaceTemplates',
-        'inventoryItems' => 'DCMI\InventoryItems',
-        'manufacturers' => 'DCMI\Manufacturers',
-        'platforms' => 'DCMI\Platforms',
-        'powerFeeds' => 'DCMI\PowerFeeds',
-        'powerOutlets' => 'DCMI\PowerOutlets',
-        'powerOutletTemplates' => 'DCMI\PowerOutletTemplates',
-        'powerPanels' => 'DCMI\PowerPanels',
-        'powerPorts' => 'DCMI\PowerPorts',
-        'powerPortTemplates' => 'DCMI\PowerPortTemplates',
-        'rackGroups' => 'DCMI\RackGroups',
-        'rackReservations' => 'DCMI\RackReservations',
-        'rackRoles' => 'DCMI\RackRoles',
-        'racks' => 'DCMI\Racks',
-        'rearPorts' => 'DCMI\RearPorts',
-        'rearPortTemplates' => 'DCMI\RearPortTemplates',
-        'regions' => 'DCMI\Regions',
-        'sites' => 'DCMI\Sites',
-        'virtualChassis' => 'DCMI\VirtualChassis',
+        // DCIM
+        'cables' => 'DCIM\Cables',
+        'connectedDevices' => 'DCIM\ConnectedDevices',
+        'consoleConnections' => 'DCIM\ConsoleConnections',
+        'consolePorts' => 'DCIM\ConsolePorts',
+        'consolePortTemplates' => 'DCIM\ConsolePortTemplates',
+        'consoleServerPorts' => 'DCIM\ConsoleServerPorts',
+        'consoleServerPortTemplates' => 'DCIM\ConsoleServerPortTemplates',
+        'deviceBays' => 'DCIM\DeviceBays',
+        'deviceBayTemplates' => 'DCIM\DeviceBayTemplates',
+        'deviceRoles' => 'DCIM\DeviceRoles',
+        'devices' => 'DCIM\Devices',
+        'deviceTypes' => 'DCIM\DeviceTypes',
+        'frontPorts' => 'DCIM\FrontPorts',
+        'frontPortTemplates' => 'DCIM\FrontPortTemplates',
+        'interfaceConnections' => 'DCIM\InterfaceConnections',
+        'interfaces' => 'DCIM\Interfaces',
+        'interfaceTemplates' => 'DCIM\InterfaceTemplates',
+        'inventoryItems' => 'DCIM\InventoryItems',
+        'manufacturers' => 'DCIM\Manufacturers',
+        'platforms' => 'DCIM\Platforms',
+        'powerFeeds' => 'DCIM\PowerFeeds',
+        'powerOutlets' => 'DCIM\PowerOutlets',
+        'powerOutletTemplates' => 'DCIM\PowerOutletTemplates',
+        'powerPanels' => 'DCIM\PowerPanels',
+        'powerPorts' => 'DCIM\PowerPorts',
+        'powerPortTemplates' => 'DCIM\PowerPortTemplates',
+        'rackGroups' => 'DCIM\RackGroups',
+        'rackReservations' => 'DCIM\RackReservations',
+        'rackRoles' => 'DCIM\RackRoles',
+        'racks' => 'DCIM\Racks',
+        'rearPorts' => 'DCIM\RearPorts',
+        'rearPortTemplates' => 'DCIM\RearPortTemplates',
+        'regions' => 'DCIM\Regions',
+        'sites' => 'DCIM\Sites',
+        'virtualChassis' => 'DCIM\VirtualChassis',
 
-        //extras
+        // Extras
         'configContexts' => 'Extras\ConfigContexts',
         'contentTypes' => 'Extras\ContentTypes',
         'customFields' => 'Extras\CustomFields',
@@ -63,7 +66,7 @@ class Client
         'scripts' => 'Extras\Scripts',
         'tags' => 'Extras\Tags',
 
-        //ipam
+        // IPAM
         'aggregates' => 'IPAM\Aggregates',
         'ipAddresses' => 'IPAM\IpAddresses',
         'prefixes' => 'IPAM\Prefixes',
@@ -75,23 +78,23 @@ class Client
         'vlans' => 'IPAM\Vlans',
         'vrfs' => 'IPAM\Vrfs',
 
-        //secrets
+        // Secrets
         'keyGen' => 'Secrets\KeyGen',
         'secrets' => 'Secrets\Secrets',
         'secretRoles' => 'Secrets\SecretRoles',
         'session' => 'Secrets\Session',
 
-        //Tenancy
+        // Tenancy
         'tenantGroups' => 'Tenancy\TenantGroups',
         'tenants' => 'Tenancy\Tenants',
 
-        //users
+        // Users
         'config' => 'Users\Config',
         'groups' => 'Users\Groups',
         'permissions' => 'Users\Permissions',
         'users' => 'Users\Users',
 
-        //Virtualization
+        // Virtualization
         'clusterGroups' => 'Virtualization\ClusterGroups',
         'clusters' => 'Virtualization\Clusters',
         'clusterTypes' => 'Virtualization\ClusterTypes',
@@ -99,14 +102,28 @@ class Client
         'virtualMachines' => 'Virtualization\VirtualMachines',
 
         'status' => 'Status',
-
     ];
 
-    /** @var \wickedsoft\NetBox\HttpClient */
+    /** @var HttpClient */
     protected $httpClient;
 
     /** @var array */
     protected $options = [];
+
+    public function __construct()
+    {
+        if (strlen(getenv('NETBOX_API')) === 0 || strlen(getenv('NETBOX_API_KEY')) === 0) {
+            throw new RuntimeException(
+                sprintf(
+                    'Environment Variables not found (NETBOX_API, NETBOX_API_KEY): "%s" "redacted(%s(%s))"',
+                    getenv('NETBOX_API'),
+                    gettype(getenv('NETBOX_API_KEY')),
+                    strlen(getenv('NETBOX_API_KEY'))
+                ),
+                1653901216
+            );
+        }
+    }
 
     /**
      * @param $method
@@ -118,7 +135,7 @@ class Client
         try {
             return $this->api($method);
         } catch (InvalidArgumentException $e) {
-            throw new \BadMethodCallException(sprintf('Undefined method called:"%s"', $method));
+            throw new BadMethodCallException(sprintf('Undefined method called: "%s"', $method));
         }
     }
 
@@ -129,36 +146,38 @@ class Client
     public function api($name)
     {
         if (!isset($this->classes[$name])) {
-            throw new \InvalidArgumentException(sprintf('Undefined method called:"%s"', $name));
+            throw new InvalidArgumentException(sprintf('Undefined method called: "%s"', $name));
         }
-        $class = '\\wickedsoft\\NetBox\\Api\\' . $this->classes[$name];
+        $class = '\\port389\\NetBox\\Api\\' . $this->classes[$name];
+
         return new $class($this);
     }
 
     /**
      * @return HttpClient
      */
-    public function getHttpClient()
+    public function getHttpClient(): HttpClient
     {
         if (!isset($this->httpClient)) {
             $this->httpClient = new HttpClient();
         }
         $this->httpClient->setOptions($this->getOptions());
+
         return $this->httpClient;
     }
 
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
     /**
-     * @param $options
+     * @param array $options
      */
-    public function setOptions($options)
+    public function setOptions(array $options)
     {
         $this->options = $options;
     }

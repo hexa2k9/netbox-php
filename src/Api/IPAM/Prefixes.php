@@ -1,98 +1,106 @@
 <?php
 
-namespace wickedsoft\NetBox\Api\IPAM;
+namespace port389\NetBox\Api\IPAM;
 
-use wickedsoft\NetBox\Api\AbstractApi;
+use GuzzleHttp\Exception\GuzzleException;
+use port389\NetBox\Api\AbstractApi;
 
 class Prefixes extends AbstractApi
 {
     /**
-     * @param $params
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param array $params
+     * @return array
+     * @throws GuzzleException
      */
-    public function add($params=[])
+    public function add(array $params = []): array
     {
         return $this->post("/ipam/prefixes/", $params);
     }
 
     /**
-     * @param $params
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param int $id
+     * @param array $params
+     * @return bool
+     * @throws GuzzleException
      */
-    public function remove($id, $params=[])
+    public function remove(int $id, array $params = []): bool
     {
-        return $this->delete("/ipam/prefixes/".$id."/", $params);
+        return $this->delete("/ipam/prefixes/" . $id . "/", $params);
     }
 
     /**
-     * @param $params
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param int $id
+     * @param array $params
+     * @return array
+     * @throws GuzzleException
      */
-    public function edit($id, $params=[])
+    public function edit(int $id, array $params = []): array
     {
-        return $this->put("/ipam/prefixes/".$id."/", $params);
+        return $this->put("/ipam/prefixes/" . $id . "/", $params);
     }
 
     /**
-     * @param $params
+     * @param array $params
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function list($params=[])
+    public function list(array $params = [])
     {
         return $this->get("/ipam/prefixes/", $params);
     }
 
     /**
-     * @param $params
+     * @param int $id
+     * @param array $params
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function show($id, $params=[])
+    public function show(int $id, array $params = [])
     {
-        return $this->get("/ipam/prefixes/".$id."/", $params);
+        return $this->get("/ipam/prefixes/" . $id . "/", $params);
     }
 
     /**
-     * @param $params
+     * @param int $id
+     * @param array $params
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function showAvailableIps($id, $params=[])
+    public function showAvailableIps(int $id, array $params = [])
     {
-        return $this->get("/ipam/prefixes/".$id."/available-ips/", $params);
+        return $this->get("/ipam/prefixes/" . $id . "/available-ips/", $params);
     }
 
     /**
-     * @param $params
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param int $id
+     * @param array $params
+     * @return array
+     * @throws GuzzleException
      */
-    public function addAvailableIps($id, $params=[])
+    public function addAvailableIps(int $id, array $params = []): array
     {
-        return $this->post("/ipam/prefixes/".$id."/available-ips/", $params);
+        return $this->post("/ipam/prefixes/" . $id . "/available-ips/", $params);
     }
 
     /**
-     * @param $params
+     * @param int $id
+     * @param array $params
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function showAvailable($id, $params=[])
+    public function showAvailable(int $id, array $params = [])
     {
-        return $this->get("/ipam/prefixes/".$id."/available-prefixes/", $params);
+        return $this->get("/ipam/prefixes/" . $id . "/available-prefixes/", $params);
     }
 
     /**
-     * @param $params
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param int $id
+     * @param array $params
+     * @return array
+     * @throws GuzzleException
      */
-    public function addAvailable($id, $params=[])
+    public function addAvailable(int $id, array $params = []): array
     {
-        return $this->post("/ipam/prefixes/".$id."/available-prefixes/", $params);
+        return $this->post("/ipam/prefixes/" . $id . "/available-prefixes/", $params);
     }
 }

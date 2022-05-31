@@ -1,6 +1,6 @@
 <?php
 
-namespace wickedsoft\NetBox\Api;
+namespace port389\NetBox\Api;
 
 interface ApiInterface
 {

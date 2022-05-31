@@ -1,28 +1,30 @@
 <?php
 
-namespace wickedsoft\NetBox\Api\Extras;
+namespace port389\NetBox\Api\Extras;
 
-use wickedsoft\NetBox\Api\AbstractApi;
+use GuzzleHttp\Exception\GuzzleException;
+use port389\NetBox\Api\AbstractApi;
 
 class ObjectChanges extends AbstractApi
 {
     /**
-     * @param $params
+     * @param array $params
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function list($params=[])
+    public function list(array $params = [])
     {
         return $this->get("/extras/object-changes/", $params);
     }
 
     /**
-     * @param $params
+     * @param int $id
+     * @param array $params
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function show($id, $params=[])
+    public function show(int $id, array $params = [])
     {
-        return $this->get("/extras/object-changes/".$id."/", $params);
+        return $this->get("/extras/object-changes/" . $id . "/", $params);
     }
 }

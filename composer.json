@@ -1,44 +1,18 @@
 {
-    "name": "wickedsoft/laravel-netbox",
-    "description": "Netbox for Laravel 8.x",
-    "keywords": ["netbox", "laravel"],
+    "name": "port389/netbox",
+    "description": "Netbox for PHP",
+    "keywords": ["netbox"],
     "license": "MIT",
     "require": {
-        "php": "^8.0|^7.4|^7.3|^7.2",
-        "laravel/framework": "^8.0",
-        "guzzlehttp/guzzle": "^7.0.1"
-    },
-    "require-dev": {
-        "phpunit/phpunit" : "^9.3.3",
-        "orchestra/testbench": "^6.0"
+        "php": "^8.1|^8.0|^7.4|^7.3|^7.2",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^6.5.0"
     },
     "autoload": {
         "psr-4": {
-            "wickedsoft\\NetBox\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "wickedsoft\\NetBox\\tests\\": "tests"
+            "port389\\NetBox\\": "src/"
         }
     },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "extra": {
-        "laravel": {
-            "providers": [
-                "wickedsoft\\NetBox\\ServiceProvider"
-            ],
-            "aliases": {
-                "NetBox": "wickedsoft\\NetBox\\Facade"
-            }
-        }
-    }
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

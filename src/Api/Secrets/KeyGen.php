@@ -1,17 +1,18 @@
 <?php
 
-namespace wickedsoft\NetBox\Api\Secrets;
+namespace port389\NetBox\Api\Secrets;
 
-use wickedsoft\NetBox\Api\AbstractApi;
+use GuzzleHttp\Exception\GuzzleException;
+use port389\NetBox\Api\AbstractApi;
 
 class KeyGen extends AbstractApi
 {
     /**
-     * @param $params
+     * @param array $params
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function list($params=[])
+    public function list(array $params = [])
     {
         return $this->get("/secrets/generate-rsa-key-pair/", $params);
     }

@@ -1,17 +1,18 @@
 <?php
 
-namespace wickedsoft\NetBox\Api\Secrets;
+namespace port389\NetBox\Api\Secrets;
 
-use wickedsoft\NetBox\Api\AbstractApi;
+use GuzzleHttp\Exception\GuzzleException;
+use port389\NetBox\Api\AbstractApi;
 
 class Session extends AbstractApi
 {
     /**
-     * @param $params
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param array $params
+     * @return array
+     * @throws GuzzleException
      */
-    public function list($params=[])
+    public function list(array $params = []): array
     {
         return $this->post("/secrets/get-session-key/", $params);
     }

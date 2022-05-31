@@ -1,17 +1,18 @@
 <?php
 
-namespace wickedsoft\NetBox\Api;
+namespace port389\NetBox\Api;
 
-use wickedsoft\NetBox\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use port389\NetBox\Client;
 
 abstract class AbstractApi implements ApiInterface
 {
-    /** @var \wickedsoft\NetBox\Client */
+    /** @var Client */
     public $client;
 
     /**
      * AbstractApi constructor.
-     * @param \wickedsoft\NetBox\Client $client
+     * @param Client $client
      */
     public function __construct(Client $client)
     {
@@ -19,41 +20,45 @@ abstract class AbstractApi implements ApiInterface
     }
 
     /**
+     * @param $path
      * @param array $parameters
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    protected function get($path, $parameters)
+    protected function get($path, array $parameters)
     {
         return $this->client->getHttpClient()->get($path, $parameters);
     }
 
     /**
+     * @param $path
      * @param array $parameters
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return array
+     * @throws GuzzleException
      */
-    protected function post($path, $parameters)
+    protected function post($path, array $parameters): array
     {
         return $this->client->getHttpClient()->post($path, $parameters);
     }
 
     /**
+     * @param $path
      * @param array $parameters
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return array
+     * @throws GuzzleException
      */
-    protected function put($path, $parameters)
+    protected function put($path, array $parameters): array
     {
         return $this->client->getHttpClient()->put($path, $parameters);
     }
 
     /**
+     * @param $path
      * @param array $parameters
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return bool
+     * @throws GuzzleException
      */
-    protected function delete($path, $parameters)
+    protected function delete($path, array $parameters): bool
     {
         return $this->client->getHttpClient()->delete($path, $parameters);
     }

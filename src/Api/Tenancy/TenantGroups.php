@@ -1,58 +1,62 @@
 <?php
 
-namespace wickedsoft\NetBox\Api\Tenancy;
+namespace port389\NetBox\Api\Tenancy;
 
-use wickedsoft\NetBox\Api\AbstractApi;
+use GuzzleHttp\Exception\GuzzleException;
+use port389\NetBox\Api\AbstractApi;
 
 class TenantGroups extends AbstractApi
 {
     /**
-     * @param $params
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param array $params
+     * @return array
+     * @throws GuzzleException
      */
-    public function add($params=[])
+    public function add(array $params = []): array
     {
         return $this->post("/tenancy/tenant-groups/", $params);
     }
 
     /**
-     * @param $params
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param int $id
+     * @param array $params
+     * @return bool
+     * @throws GuzzleException
      */
-    public function remove($id, $params=[])
+    public function remove(int $id, array $params = []): bool
     {
-        return $this->delete("/tenancy/tenant-groups/".$id."/", $params);
+        return $this->delete("/tenancy/tenant-groups/" . $id . "/", $params);
     }
 
     /**
-     * @param $params
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param int $id
+     * @param array $params
+     * @return array
+     * @throws GuzzleException
      */
-    public function edit($id, $params=[])
+    public function edit(int $id, array $params = []): array
     {
-        return $this->put("/tenancy/tenant-groups/".$id."/", $params);
+        return $this->put("/tenancy/tenant-groups/" . $id . "/", $params);
     }
 
     /**
-     * @param $params
+     * @param array $params
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function list($params=[])
+    public function list(array $params = [])
     {
         return $this->get("/tenancy/tenant-groups/", $params);
     }
 
     /**
-     * @param $params
+     * @param int $id
+     * @param array $params
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function show($id, $params=[])
+    public function show(int $id, array $params = [])
     {
-        return $this->get("/tenancy/tenant-groups/".$id."/", $params);
+        return $this->get("/tenancy/tenant-groups/" . $id . "/", $params);
     }
 }

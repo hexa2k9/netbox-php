@@ -1,22 +1,37 @@
 <?php
 
-namespace wickedsoft\NetBox\HttpClient;
+namespace port389\NetBox\HttpClient;
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 
 class HttpClient implements HttpClientInterface
 {
-    /** @var \GuzzleHttp\Client */
+    /** @var Client */
     protected $client;
 
     /** @var array */
     protected $options = [];
 
     /**
-     * @return \GuzzleHttp\Client
+     * @return Client
      */
-    public function getClient()
+    public function getClient(): Client
     {
         if (!isset($this->client)) {
-            $this->client = new \GuzzleHttp\Client(config('netbox.client_options'));
+            $this->client = new Client([
+                'base_uri' => getenv('NETBOX_API'),
+                RequestOptions::TIMEOUT => 180,
+                RequestOptions::COOKIES => true,
+                RequestOptions::CONNECT_TIMEOUT => 180,
+                RequestOptions::ALLOW_REDIRECTS => false,
+                RequestOptions::HEADERS => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                    'Authorization' => sprintf("Token %s", getenv('NETBOX_API_KEY')),
+                ]
+            ]);
 
             return $this->client;
         }
@@ -25,10 +40,10 @@ class HttpClient implements HttpClientInterface
     }
 
     /**
-     * @param $client
-     * @return \GuzzleHttp\Client
+     * @param Client $client
+     * @return Client
      */
-    public function setClient($client)
+    public function setClient(Client $client): Client
     {
         $this->client = $client;
 
@@ -36,77 +51,85 @@ class HttpClient implements HttpClientInterface
     }
 
     /**
-     * @param array $body
+     * @param string $path
+     * @param array $query
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function get($path="", $query = [])
+    public function get(string $path = "", array $query = []): array
     {
         $response = $this->getClient()->request(
             'GET',
-            config('netbox.sites.default.url').$path,
+            getenv('NETBOX_API') . $path,
             [
                 'query' => $query
             ]
         );
-        return json_decode((string)$response->getBody(), true);
+
+        return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
+     * @param string $path
      * @param array $body
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return array
+     * @throws GuzzleException
      */
-    public function post($path="", $body = [])
+    public function post(string $path = "", array $body = []): array
     {
         $response = $this->getClient()->request(
             'POST',
-            config('netbox.sites.default.url').$path,
+            getenv('NETBOX_API') . $path,
             [
                 'json' => $body
             ]
         );
-        return json_decode((string)$response->getBody(), true);
+
+        return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
+     * @param string $path
      * @param array $body
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return array
+     * @throws GuzzleException
      */
-    public function put($path="", $body = [])
+    public function put(string $path = "", array $body = []): array
     {
         $response = $this->getClient()->request(
             'PUT',
-            config('netbox.sites.default.url').$path,
+            getenv('NETBOX_API') . $path,
             [
                 'json' => $body
             ]
         );
-        return json_decode((string)$response->getBody(), true);
+
+        return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
+     * @param string $path
      * @param array $body
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return bool
+     * @throws GuzzleException
      */
-    public function delete($path="", $body = [])
+    public function delete(string $path = "", array $body = []): ?bool
     {
         $response = $this->getClient()->request(
             'DELETE',
-            config('netbox.sites.default.url').$path,
+            getenv('NETBOX_API') . $path,
             [
                 'json' => $body
             ]
         );
-        return json_decode((string)$response->getBody(), true);
+
+        return $response->getStatusCode() === 204;
     }
 
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }

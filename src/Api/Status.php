@@ -1,15 +1,17 @@
 <?php
 
-namespace wickedsoft\NetBox\Api;
+namespace port389\NetBox\Api;
+
+use GuzzleHttp\Exception\GuzzleException;
 
 class Status extends AbstractApi
 {
     /**
-     * @param $params
+     * @param array $params
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function show($params=[])
+    public function show(array $params = [])
     {
         return $this->get("/status/", $params);
     }

@@ -1,17 +1,18 @@
 <?php
 
-namespace wickedsoft\NetBox\Api\Users;
+namespace port389\NetBox\Api\Users;
 
-use wickedsoft\NetBox\Api\AbstractApi;
+use GuzzleHttp\Exception\GuzzleException;
+use port389\NetBox\Api\AbstractApi;
 
 class Config extends AbstractApi
 {
     /**
-     * @param $params
+     * @param array $params
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function list($params=[])
+    public function list(array $params = [])
     {
         return $this->get("/users/users/", $params);
     }
