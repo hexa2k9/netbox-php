@@ -110,6 +110,25 @@ class HttpClient implements HttpClientInterface
     /**
      * @param string $path
      * @param array $body
+     * @return array
+     * @throws GuzzleException
+     */
+    public function patch(string $path = "", array $body = []): array
+    {
+        $response = $this->getClient()->request(
+            'PATCH',
+            getenv('NETBOX_API') . $path,
+            [
+                'json' => $body
+            ]
+        );
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * @param string $path
+     * @param array $body
      * @return bool
      * @throws GuzzleException
      */

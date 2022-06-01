@@ -55,6 +55,17 @@ abstract class AbstractApi implements ApiInterface
     /**
      * @param $path
      * @param array $parameters
+     * @return array
+     * @throws GuzzleException
+     */
+    protected function patch($path, array $parameters): array
+    {
+        return $this->client->getHttpClient()->patch($path, $parameters);
+    }
+
+    /**
+     * @param $path
+     * @param array $parameters
      * @return bool
      * @throws GuzzleException
      */
