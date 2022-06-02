@@ -40,6 +40,17 @@ class Secrets extends AbstractApi
     }
 
     /**
+     * @param int $id
+     * @param array $params
+     * @return array
+     * @throws GuzzleException
+     */
+    public function update(int $id, array $params = []): array
+    {
+        return $this->patch("/secrets/secrets/" . $id . "/", $params);
+    }
+
+    /**
      * @param array $params
      * @return mixed
      * @throws GuzzleException

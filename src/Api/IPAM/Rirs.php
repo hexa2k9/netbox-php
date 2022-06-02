@@ -40,6 +40,17 @@ class Rirs extends AbstractApi
     }
 
     /**
+     * @param int $id
+     * @param array $params
+     * @return array
+     * @throws GuzzleException
+     */
+    public function update(int $id, array $params = []): array
+    {
+        return $this->patch("/ipam/rirs/" . $id . "/", $params);
+    }
+
+    /**
      * @param array $params
      * @return mixed
      * @throws GuzzleException

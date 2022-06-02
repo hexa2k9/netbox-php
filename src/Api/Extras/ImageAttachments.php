@@ -40,6 +40,17 @@ class ImageAttachments extends AbstractApi
     }
 
     /**
+     * @param int $id
+     * @param array $params
+     * @return array
+     * @throws GuzzleException
+     */
+    public function update(int $id, array $params = []): array
+    {
+        return $this->patch("/extras/image-attachments/" . $id . "/", $params);
+    }
+
+    /**
      * @param array $params
      * @return mixed
      * @throws GuzzleException
